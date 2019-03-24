@@ -21,6 +21,7 @@ PyPortal:
 <img src="images/a-on.jpg" width="400">
 
 Meraki Dashboard:
+
 <img src="images/meraki-blocked.jpg" width="400">
 
 Console output log of the entire process:
