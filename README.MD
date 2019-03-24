@@ -18,7 +18,7 @@ Here is Amanda's devices being blocked / off:
 
 PyPortal:
 
-<img src="images/a-on.jpg" width="800">
+<img src="images/a-on.jpg" width="400">
 
 Meraki Dashboard:
 <img src="images/meraki-blocked.jpg" width="400">
