@@ -3,11 +3,12 @@ import board
 from adafruit_pyportal import PyPortal
 from adafruit_bitmap_font import bitmap_font
 from adafruit_display_text.label import Label
-
 import adafruit_touchscreen
 
 from secrets import secrets
 
+
+# Setup a dictionary will a list off the kids and the devices that they have
 device_dict = {
     "z": {
         "58:b1:0f:cf:77:a2": {
@@ -35,12 +36,15 @@ device_dict = {
     },
 }
 
+# initialize the Touchscreen
 ts = adafruit_touchscreen.Touchscreen(board.TOUCH_XL, board.TOUCH_XR,
                                       board.TOUCH_YD, board.TOUCH_YU)
 
+# initailize the pytportal object
 pyportal = PyPortal(default_bg="./kids.bmp")
 pyportal.set_backlight(.5)
 
+# location of the ON / OFF "buttons"
 zOn = (44, 212)
 zOff = (34, 212)
 aOn = (190, 212)
@@ -63,6 +67,7 @@ def setupText(position, text_color):
     pyportal.splash.append(textarea)
     text_areas.append(textarea)
 
+# Call to Meraki and get the current status of the the kid and each of their devices
 def getStats(kid):
     headers = {"X-Cisco-Meraki-API-Key": secrets['meraki_key'], "Content-Type": "application/json"}
     for device in device_dict[kid]:
@@ -73,6 +78,7 @@ def getStats(kid):
         except (ValueError, RuntimeError) as e:
             print("Failed to get data\n", e)
 
+# call to Meraki and set the status of each of the specified kid's devices
 def setStats(kid, status):
     headers = {"X-Cisco-Meraki-API-Key": secrets['meraki_key'], "Content-Type": "application/json"}
     for device in device_dict[kid]:
@@ -82,12 +88,14 @@ def setStats(kid, status):
         except (ValueError, RuntimeError) as e:
             print("Failed to reset data\n", e)
 
+# loop thru the kid and determine if they are on or off.  Just one device being "off" will result in an off status on the display
 def isOnOrOff(kid):
     for dev in device_dict[kid]:
         if device_dict[kid][dev]['status'] == "Blocked":
             return False
     return True
 
+# setup display for the first kid
 print("Status for Zachary's devices: ")
 getStats("z")
 zStatus = isOnOrOff("z")
@@ -99,6 +107,7 @@ else:
     setupText(zOn, onColor)
     text_areas[0].text = "ON"
 
+# setup the display for the second kid
 print("Status for Amanda's devices: ")
 getStats("a")
 aStatus = isOnOrOff("a")
@@ -110,6 +119,9 @@ else:
     setupText(aOn, onColor)
     text_areas[1].text = "ON"
 
+
+# Now lets just spin up a loop, if we detect a touch in the area of the kid's button then set the opposite profile state for the kid
+# yes this should be cleaned up and put into a function (I'm getting there)
 while True:
     p = ts.touch_point
     if p:
