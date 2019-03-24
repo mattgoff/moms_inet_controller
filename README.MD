@@ -7,21 +7,24 @@ First a little background.  Our wifi access point is made by a company called Me
 Here is normal operation, both kids have internet access:
 
 PyPortal:
+
 <img src="images/a-on.jpg" width="400">
 
 Meraki Dashboard:
-<img src="images/meraki-normal.jpg" width="400">
+
+<img src="images/meraki-normal.jpg" width="800">
 
 Here is Amanda's devices being blocked / off:
 
 PyPortal:
-<img src="images/a-on.jpg" width="400">
+
+<img src="images/a-on.jpg" width="800">
 
 Meraki Dashboard:
 <img src="images/meraki-blocked.jpg" width="400">
 
 Console output log of the entire process:
-<img src="images/console-out.jpg" width="400">
+<img src="images/console-out.jpg" width="800">
 
 A/B.  At boot up, current state is pulled for both kids
 
