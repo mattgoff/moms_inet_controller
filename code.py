@@ -125,40 +125,50 @@ else:
 while True:
     p = ts.touch_point
     if p:
-        if (p[0] > 16000 and p[0] < 25000) and p[1] > 46000:
-            zStatus = not zStatus
-            print("Z: {}".format(zStatus))
-            if zStatus == False:
-                text_areas[0].text = ""
-                text_areas[0].x = zOff[0]
-                text_areas[0].y = zOff[1]
-                text_areas[0].color = offColor
-                text_areas[0].text = "OFF"
-                setStats('z', "Blocked")
-            else:
-                text_areas[0].text = ""
-                text_areas[0].x = zOn[0]
-                text_areas[0].y = zOn[1]
-                text_areas[0].color = onColor
-                text_areas[0].text = "ON"
-                setStats('z', "Normal")
-            time.sleep(1.5)
+        p2 = ts.touch_point
+        if p2:
+            p3 = ts.touch_point
+            if p3:
+                try:
+                    pAvg = ( p[0] + p2[0] + p3[0]) / 3
+                    print("pAVG = {}  -  P1 = {}".format(pAvg, p[1]))
+                except TypeError:
+                    print(p, p2, p3)
 
-        if (p[0] > 35000 and p[0] < 46000) and p[1] > 46000:
-            aStatus = not aStatus
-            print("A: {}".format(aStatus))
-            if aStatus == False:
-                text_areas[1].text = ""
-                text_areas[1].x = aOff[0]
-                text_areas[1].y = aOff[1]
-                text_areas[1].color = offColor
-                text_areas[1].text = "OFF"
-                setStats('a', "Blocked")
-            else:
-                text_areas[1].text = ""
-                text_areas[1].x = aOn[0]
-                text_areas[1].y = aOn[1]
-                text_areas[1].color = onColor
-                text_areas[1].text = "ON"
-                setStats('a', "Normal")
-            time.sleep(1.5)
+                if (pAvg > 16000 and pAvg < 25000) and p[1] > 45000:
+                    zStatus = not zStatus
+                    print("Z: {}".format(zStatus))
+                    if zStatus == False:
+                        text_areas[0].text = ""
+                        text_areas[0].x = zOff[0]
+                        text_areas[0].y = zOff[1]
+                        text_areas[0].color = offColor
+                        text_areas[0].text = "OFF"
+                        setStats('z', "Blocked")
+                    else:
+                        text_areas[0].text = ""
+                        text_areas[0].x = zOn[0]
+                        text_areas[0].y = zOn[1]
+                        text_areas[0].color = onColor
+                        text_areas[0].text = "ON"
+                        setStats('z', "Normal")
+                    time.sleep(1.5)
+
+                if (pAvg > 35000 and pAvg < 46000) and p[1] > 45000:
+                    aStatus = not aStatus
+                    print("A: {}".format(aStatus))
+                    if aStatus == False:
+                        text_areas[1].text = ""
+                        text_areas[1].x = aOff[0]
+                        text_areas[1].y = aOff[1]
+                        text_areas[1].color = offColor
+                        text_areas[1].text = "OFF"
+                        setStats('a', "Blocked")
+                    else:
+                        text_areas[1].text = ""
+                        text_areas[1].x = aOn[0]
+                        text_areas[1].y = aOn[1]
+                        text_areas[1].color = onColor
+                        text_areas[1].text = "ON"
+                        setStats('a', "Normal")
+                    time.sleep(1.5)
